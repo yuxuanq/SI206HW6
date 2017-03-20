@@ -176,7 +176,18 @@ print("\n\n***** Problem 10 *****")
 
 ## Define a function called readfiles, which accepts a list of filenames as input and yields each line in each of the file with that name,
 # assuming those files exist in the same directory as this program.
-
+def readfiles(lst):
+    lines = []
+    for name in lst:
+        file = open(name, 'r')
+        lines.append(file.readlines())
+        file.close()
+    new_lst = []
+    for i in lines:
+        for j in range(0, len(i)):
+            new_lst.append(i[j])
+    return new_lst
+print(readfiles(["samplehw6_1.txt"]))
 ## Define a generator called len_check which accepts a generator of file lines and returns a generator object of all the
 # lines it's accepted whose length is longer than 40 characters.
 
