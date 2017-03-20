@@ -176,18 +176,7 @@ print("\n\n***** Problem 10 *****")
 
 ## Define a function called readfiles, which accepts a list of filenames as input and yields each line in each of the file with that name,
 # assuming those files exist in the same directory as this program.
-def readfiles(lst):
-    lines = []
-    for name in lst:
-        file = open(name, 'r')
-        lines.append(file.readlines())
-        file.close()
-    new_lst = []
-    for i in lines:
-        for j in range(0, len(i)):
-            new_lst.append(i[j])
-    return new_lst
-print(readfiles(["samplehw6_1.txt"]))
+
 ## Define a generator called len_check which accepts a generator of file lines and returns a generator object of all the
 # lines it's accepted whose length is longer than 40 characters.
 
@@ -204,14 +193,25 @@ print(readfiles(["samplehw6_1.txt"]))
 # so you can test with those file names! The test below also relies upon these files. Of course, you could also create other files for testing.
 
 # Define readfiles (make sure to close the file reference in the right place)
-
+def readfiles(lst):
+    for name in lst:
+        file = open(name,'r')
+        for line in file:
+            yield line
+        file.close()
 
 # Define len_check
-
+def len_check(gen):
+    for i in gen:
+        if len(i) > 40:
+            yield i
 
 # Define main_filterer
+def main_filterer(lst):
+    lines = readfiles(lst)
+    return len_check(lines)
 
-
+#main_filterer(["samplehw6_1.txt"])
 
 ## Uncomment this code to test so you can see easily what results from your code. DO uncomment it. DO NOT delete or change it. (You can add other code above while you work, of course.)
 # provided_file_names = ["samplehw6_1.txt","samplehw6_2.txt"]
